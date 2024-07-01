@@ -2,18 +2,25 @@ package aula05;
 
 public class Banco {
     public static void main(String[] args) {
-        ContasBanco c1 = new ContasBanco();
 
+        ContasBanco p1 = new ContasBanco();
+        p1.setNumConta(821934);
+        p1.setDonoConta("Eduardo");
+        p1.abrirConta("CC");
 
-        c1.abrirConta("CC");
-        System.out.println(c1.getSaldoConta());
-        c1.depositar(3);
-        System.out.println(c1.getSaldoConta());
-        System.out.println(c1.isStatusConta());
+        ContasBanco p2 = new ContasBanco();
+        p2.setNumConta(134512);
+        p2.setDonoConta("Graziele");
+        p2.abrirConta("CP");
 
-        c1.sacar(53);
-        System.out.println(c1.getSaldoConta());
-        c1.fecharConta();
-        System.out.println(c1.isStatusConta());
+        p1.depositar(100);
+        p2.depositar(500);
+
+        p2.sacar(200);
+
+        p1.estadoAtual();
+        p2.estadoAtual();
+
+        p1.fecharConta();
     }
 }

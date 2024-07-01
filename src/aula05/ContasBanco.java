@@ -8,8 +8,75 @@ public class ContasBanco {
     private boolean statusConta;
 
     public ContasBanco() {
-        statusConta = false;
-        saldoConta = 0;
+        this.saldoConta = 0;
+        this.statusConta = false;
+    }
+
+    public void estadoAtual() {
+        System.out.println("================================");
+        System.out.println("Conta: " + this.getNumConta());
+        System.out.println("Conta: " + this.getTipoConta());
+        System.out.println("Conta: " + this.getDonoConta());
+        System.out.println("Conta: " + this.getSaldoConta());
+        System.out.println("Conta: " + this.isStatusConta());
+    }
+
+    public void abrirConta(String tipoConta) {
+        this.setTipoConta(tipoConta);
+        this.setStatusConta(true);
+        if (tipoConta.equals("CC")) {
+            this.setSaldoConta(50);
+        } else if (tipoConta == "CP") this.setSaldoConta(150);
+    }
+
+    public void fecharConta() {
+        if (this.getSaldoConta() > 0) {
+            System.out.println("Conta com dinheiro");
+        } else if (this.getSaldoConta() < 0) {
+            System.out.println("Conta em débito");
+        } else {
+            this.setStatusConta(false);
+            System.out.println("Conta fechada com sucesso!");
+        }
+    }
+
+    public void depositar(float valor) {
+        if (this.isStatusConta()) {
+            this.setSaldoConta(this.getSaldoConta() + valor);
+            System.out.println("Depósito realizado na conta de " + this.getDonoConta());
+        } else {
+            System.out.println("Impossível depositar em uma conta fechada");
+        }
+    }
+
+    public void sacar(float valor) {
+        if (this.isStatusConta()) {
+            if (this.getSaldoConta() >= valor) {
+                this.setSaldoConta(this.getSaldoConta() - valor);
+                System.out.println("Saque realizado na conta de " + this.getDonoConta());
+            } else {
+                System.out.println("Saldo insuficiente para saque");
+            }
+        } else {
+            System.out.println("Impossível sacar de uma conta fechada");
+        }
+    }
+
+    public void pagarMensal() {
+        int valor = 0;
+        if (this.getTipoConta() == "CC") {
+            valor = 12;
+        } else if (this.getTipoConta() == "CP") {
+            valor = 20;
+        }
+
+        if (this.isStatusConta()) {
+            this.setSaldoConta(this.getSaldoConta() - valor);
+            System.out.println("Mensalidade paga com sucesso por " + this.getDonoConta());
+        } else {
+            System.out.println("Impossível pagar uma conta fechada!");
+        }
+
     }
 
     public int getNumConta() {
@@ -52,65 +119,5 @@ public class ContasBanco {
         this.statusConta = statusConta;
     }
 
-    public void abrirConta(String tipoConta) {
-        setTipoConta(tipoConta);
-        setStatusConta(true);
-        if (tipoConta == "CC") {
-            setSaldoConta(50);
-        } else if (tipoConta == "CP") {
-            setSaldoConta(150);
-        }
-    }
 
-    public void fecharConta() {
-        if (saldoConta > 0) {
-            System.out.println("Conta com dinheiro");
-        } else if (saldoConta < 0) {
-            System.out.println("Conta em débito");
-        } else {
-            setStatusConta(false);
-        }
-    }
-
-    public void depositar(float valor) {
-        if (statusConta) {
-            setSaldoConta(getSaldoConta() + valor);
-        } else {
-            System.out.println("Impossivel Depositar");
-        }
-    }
-
-    public int sacar(float valor) {
-        if (statusConta) {
-            if (saldoConta >= valor) {
-                setSaldoConta(getSaldoConta() - valor);
-                return 1; // Sucesso
-            } else {
-                System.out.println("Saldo insuficiente");
-                return 0; // Falha
-            }
-        } else {
-            System.out.println("Impossível sacar");
-            return -1; // Falha
-        }
-    }
-
-    public void pagarMensal() {
-        float valor = 0;
-        if (tipoConta == "CC") {
-            valor = 12;
-        } else if (tipoConta == "CP") {
-            valor = 20;
-        }
-
-        if (statusConta) {
-            if (saldoConta > valor) {
-                setSaldoConta(getSaldoConta() - valor);
-            } else {
-                System.out.println("Saldo insuficiente");
-            }
-        } else {
-            System.out.println("Impossivel pagar");
-        }
-    }
 }
